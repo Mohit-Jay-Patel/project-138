@@ -14,6 +14,9 @@ var audio1;
 var pcscore =0;
 var video="";
 var pose_net="";
+var rightWrist_x='';
+var rightWrist_y=""; 
+var score_rightWrist="";
 //ball x and y and speedx speed y and radius
 var ball = {
     x:350/2,
@@ -36,11 +39,23 @@ function setup(){
 function modelloaded(){
   console.log("Model has been loaded");
 }
-function gotPoses(){
-  console.log("hi");
+function gotPoses(results){
+  
+  if(results.length > 0){
+    console.log(results);
+    rightWrist_x=results[0].pose.rightWrist.x;
+    rightWrist_y=results[0].pose.rightWrist.y;
+    console.log("Right Wrist X = "+rightWrist_x+"Right Wrist Y = "+rightWrist_y);
+    score_rightWrist=results[0].pose.keypoints[10].score;
+    }
 }
 
 function draw(){
+  if(score_rightWrist>0.2){
+    fill("#FF0000");
+    stroke("#FF0000");
+    circle(rightWrist_x,rightWrist_y,30);
+  }
 image(video,0,0,700,600);
  background(0); 
 
