@@ -17,6 +17,7 @@ var pose_net="";
 var rightWrist_x='';
 var rightWrist_y=""; 
 var score_rightWrist="";
+var game_status="";
 //ball x and y and speedx speed y and radius
 var ball = {
     x:350/2,
@@ -49,15 +50,20 @@ function gotPoses(results){
     score_rightWrist=results[0].pose.keypoints[10].score;
     }
 }
-
+function play(){
+  game_status="start";
+  document.getElementById("status").innerHTML="Game is loaded";
+} 
 function draw(){
+  if(game_status=="start"){
   if(score_rightWrist>0.2){
     fill("#FF0000");
     stroke("#FF0000");
     circle(rightWrist_x,rightWrist_y,30);
   }
+  background(0); 
 image(video,0,0,700,600);
- background(0); 
+ 
 
  fill("black");
  stroke("black");
@@ -94,6 +100,7 @@ image(video,0,0,700,600);
    
    //function move call which in very important
     move();
+    }
 }
 
 
